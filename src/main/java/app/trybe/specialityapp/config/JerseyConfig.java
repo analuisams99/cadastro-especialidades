@@ -1,4 +1,4 @@
-package app.trybe.specialityapp.controller.config;
+package app.trybe.specialityapp.config;
 
 import app.trybe.specialityapp.SpecialityAppApplication;
 import javax.ws.rs.ApplicationPath;
