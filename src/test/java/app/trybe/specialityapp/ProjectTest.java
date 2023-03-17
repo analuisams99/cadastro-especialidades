@@ -61,6 +61,7 @@ public class ProjectTest {
           .findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -82,6 +83,7 @@ public class ProjectTest {
           .findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -103,6 +105,7 @@ public class ProjectTest {
           .findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -124,6 +127,7 @@ public class ProjectTest {
           .filter(value -> value.contains("spring-boot-starter-data-jpa")).findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -145,6 +149,7 @@ public class ProjectTest {
           reader.lines().filter(value -> value.contains("com.h2database")).findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -167,6 +172,7 @@ public class ProjectTest {
           reader.lines().filter(value -> value.contains("port: 8080")).findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -189,6 +195,7 @@ public class ProjectTest {
           reader.lines().filter(value -> value.contains("datasource:")).findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
@@ -206,11 +213,11 @@ public class ProjectTest {
       File applicationYaml = new File(RESOURCES_TEST_FOLDER + "/application.yml");
 
       BufferedReader reader = new BufferedReader(new FileReader(applicationYaml));
-
       boolean isValid =
           reader.lines().filter(value -> value.contains("logging:")).findFirst().isPresent();
 
       Assertions.assertTrue(isValid);
+      reader.close();
 
     } catch (Exception error) {
       error.printStackTrace();
