@@ -17,6 +17,8 @@ import javax.ws.rs.core.Response;
 
 /**Classe ProfessionalController. */
 @Path("/api/professional")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProfessionalController {
 
   @Inject
@@ -25,7 +27,6 @@ public class ProfessionalController {
   /**Método de encontrar todos os profissionais listados.*/
   @GET
   @Path("/all")
-  @Produces(MediaType.APPLICATION_JSON)
   public Response getAllProfessionals() {
     try {
       return Response.ok().entity(professionalService.findAll()).build();
@@ -39,7 +40,6 @@ public class ProfessionalController {
   /**Método de achar um profissional pelo id.*/
   @GET
   @Path("/{id}")
-  @Produces(MediaType.APPLICATION_JSON)
   public Response findById(@PathParam("id") Integer id) {
     try {
       Professional professional = professionalService.findById(id);
@@ -61,7 +61,6 @@ public class ProfessionalController {
   /**Método de inserir um novo profissional.*/
   @POST
   @Path("/add")
-  @Consumes(MediaType.APPLICATION_JSON)
   public Response addProfessional(Professional professional) {
     try {
       professionalService.save(professional);
@@ -77,7 +76,6 @@ public class ProfessionalController {
   /**Método de atualizar o nome e a especialidade de um profissional.*/
   @PUT
   @Path("/edit/{id}")
-  @Consumes(MediaType.APPLICATION_JSON)
   public Response editProfessional(@PathParam("id") Integer id, Professional professional) {
     try {
       professionalService.update(id, professional);
