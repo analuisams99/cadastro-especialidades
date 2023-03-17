@@ -21,8 +21,22 @@ public class Professional {
   @Column
   private String speciality;
   
+  /**Construtor vazio para uso do JPA.*/
+  public Professional() {}
+
+  /**Construtor da classe Professional.*/
+  public Professional(Integer id, String name, String  speciality) {
+    this.id = id;
+    this.name = name;
+    this.speciality = speciality;
+  }
+
   public Integer getId() {
     return id;
+  }
+  
+  public void setId(Integer id) {
+    this.id = id;
   }
   
   public String getName() {
