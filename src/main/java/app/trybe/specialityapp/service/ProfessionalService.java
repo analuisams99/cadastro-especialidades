@@ -3,7 +3,6 @@ package app.trybe.specialityapp.service;
 import app.trybe.specialityapp.model.Professional;
 import app.trybe.specialityapp.repository.ProfessionalRepository;
 import java.util.List;
-import javax.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,7 @@ public class ProfessionalService {
   
   /**Método de achar um profissional pelo id.*/
   public Professional findById(Integer id) {
-    return repository.findById(id).orElseThrow(() -> 
-        new NotFoundException("Não foi possível encontrar o profissional com o ID informado."));
+    return repository.findById(id).get();
   }
   
   /**Método de inserir um novo profissional.*/
