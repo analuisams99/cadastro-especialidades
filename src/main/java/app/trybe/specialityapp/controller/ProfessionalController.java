@@ -12,13 +12,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**Classe ProfessionalController. */
-@Path("/api/professional")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Path("/professional")
+@Produces("application/json")
+@Consumes("application/json")
 public class ProfessionalController {
 
   @Inject
@@ -28,12 +27,12 @@ public class ProfessionalController {
   @GET
   @Path("/all")
   public Response getAllProfessionals() {
-    try {
-      return Response.ok().entity(professionalService.findAll()).build();
-    } catch (Exception e) {
-      ApplicationError error = new ApplicationError(
-          Response.Status.NOT_FOUND, "Nenhum registro foi encontrado!");
-      return Response.status(error.getStatus()).entity(error).build();
+    if (professionalService.findAll().isEmpty()) {
+      ApplicationError error =
+          new ApplicationError(Response.Status.NOT_FOUND, "Nenhum registro foi encontrado!");
+      return Response.status(Response.Status.NOT_FOUND).entity(error).build();
+    } else {
+      return Response.ok(professionalService.findAll()).build();
     }
   }
   
@@ -41,20 +40,14 @@ public class ProfessionalController {
   @GET
   @Path("/{id}")
   public Response findById(@PathParam("id") Integer id) {
-    try {
-      Professional professional = professionalService.findById(id);
-      if (professional != null) {
-        return Response.ok(professional).build();
-      } else {
-        ApplicationError error = new ApplicationError(
-            Response.Status.NOT_FOUND,
-            "Não foi possível encontrar o profissional com o ID informado.");
-        return Response.status(error.getStatus()).entity(error).build();
-      }
-    } catch (Exception e) {    
+    Professional professional = professionalService.findById(id);
+    if (professional == null) {
       ApplicationError error = new ApplicationError(
-             Response.Status.INTERNAL_SERVER_ERROR, "Ocorreu um erro interno no servidor.");
+          Response.Status.NOT_FOUND,
+          "Não foi possível encontrar o profissional com o ID informado.");
       return Response.status(error.getStatus()).entity(error).build();
+    } else {
+      return Response.ok(professional).build();
     }
   }
   
@@ -62,16 +55,16 @@ public class ProfessionalController {
   @POST
   @Path("/add")
   public Response addProfessional(Professional professional) {
-    try {
-      professionalService.save(professional);
-      return Response.status(Response.Status.CREATED).entity("Inserido").build();
-    } catch (Exception e) {
-      ApplicationError error = new ApplicationError(
-          Response.Status.BAD_REQUEST, 
+    if (professional.getId() != null) {
+      ApplicationError error = new ApplicationError(Response.Status.BAD_REQUEST,
           "Não é permitido inserir novos registros com ID explícito");
-      return Response.status(error.getStatus()).entity(error).build();
+      return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
+    } else {
+      professionalService.save(professional);
+      return Response.status(Response.Status.CREATED).entity("Inserido").build();    	
     }
   }
+
   
   /**Método de atualizar o nome e a especialidade de um profissional.*/
   @PUT
