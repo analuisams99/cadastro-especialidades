@@ -61,7 +61,7 @@ public class ProfessionalController {
       return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
     } else {
       professionalService.save(professional);
-      return Response.status(Response.Status.CREATED).entity("Inserido").build();    	
+      return Response.status(Response.Status.CREATED).entity("Inserido").build();
     }
   }
 
